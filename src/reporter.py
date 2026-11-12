@@ -1,3 +1,4 @@
+import pandas as pd
 class DataFrameReporter:
     def __init__(self, float_format='0.05f', percent_format='0.02%', include_all=False):
         self.float_format = float_format
@@ -33,7 +34,7 @@ class DataFrameReporter:
 
 import pandas as pd
 
-data = pd.read_csv('payments.csv')
+data = pd.read_csv('data/payments.csv')
 
 # не нужно менять код ниже - он для проверки правильности работы show_report с разными настройками
 reporter_1 = DataFrameReporter(float_format='0.02f', percent_format='0.03%')
