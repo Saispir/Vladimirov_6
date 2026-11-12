@@ -3,7 +3,7 @@ class DataFrameReporter:
         self.float_format = float_format
         self.percent_format = percent_format
         self.include_all = include_all
-                
+    
     def show_report(self, df, title=None):
         if title:
             print(title)
@@ -16,12 +16,19 @@ class DataFrameReporter:
 
         print('Доля дубликатов:', format(duplicates / df.shape[0], self.percent_format))
 
-        # выведите результат describe с параметром include='all', если include_all класса равен True
-        # если include_all класса равен False, то используйте значение include по умолчанию
-        if self.include_all:
-            print(df.describe(include='all'))
-        else:
-            print(df.describe())
+        print(df.describe(include='all' if self.include_all else None))
+
+        total_cells = df.shape[1] * df.shape[0]
+        missing_values_count = df.isnull().sum().sum()
+        missing_values_share = (missing_values_count / total_cells) if total_cells > 0 else 0.0
+        formatted_missing_share = format(missing_values_share, self.float_format)
+        
+        # выведите количество пропусков во всем датафрейме одним числом
+        print(f"Количество пропусков: {missing_values_count}")
+        
+        # выведите долю пропусков во всем датафрейме одним числом с плавающей точкой
+        # в формате float_format
+        print(f"Доля пропусков: {formatted_missing_share}")
 
 
 import pandas as pd
